@@ -1,9 +1,79 @@
+import { createBrowserRouter, RouterProvider } from "react-router"
+import RootLayout from "./components/RootLayout.jsx";
+import Login from "./features/auth/Login.jsx";
+import Register from "./features/auth/Register.jsx";
+import UserProfile from "./features/users/UserProfile.jsx";
+import AddAppointment from "./features/appointment/AddAppointment.jsx";
+import MyAppointments from "./features/appointment/MyAppointments.jsx";
+import AllAppointments from "./features/appointment/AllAppointments.jsx";
+import IsLogin from "./components/IsLogin.jsx";
+import RequireAdminAuth from "./components/RequireAdminAuth.jsx";
+import RequireUserAuth from "./components/RequireUserAuth.jsx";
+import AdminDashboard from "./features/appointment/AdminDashboard.jsx";
+
+
 
 
 export default function App() {
-  return (
-    <div>
-      <h1 className="text-red-600 text-6xl">Home</h1>
-    </div>
-  )
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout />,
+      children: [
+        {
+          index: true,
+          element: <Login />
+        },
+        {
+          element: <IsLogin />,
+          children: [
+            {
+              path: "login",
+              element: <Login />,
+            },
+            {
+              path: "register",
+              element: <Register />,
+            }
+          ]
+        },
+
+        {
+          element: <RequireAdminAuth />,
+          children: [
+            {
+              path: 'appointment/all-appointments',
+              element: <AllAppointments />
+            },
+            {
+              path: 'appointment/stats',
+              element: <AdminDashboard />
+            }
+          ]
+        },
+        {
+          element: <RequireUserAuth />,
+          children: [
+            {
+              path: 'profile',
+              element: <UserProfile />
+            },
+            {
+              path: 'appointment',
+              element: <AddAppointment />
+            },
+
+            {
+              path: 'appointment/my-appointments',
+              element: <MyAppointments />
+            }
+          ]
+        },
+
+      ]
+    }
+
+  ]);
+  return <RouterProvider router={router} />
 }
