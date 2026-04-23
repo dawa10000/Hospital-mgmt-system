@@ -60,7 +60,7 @@ const Register = () => {
                 toast.success('User registered successfully');
                 nav('/login');
               } catch (err) {
-                toast.error(err.data.message || err.data);
+                toast.error(err?.data?.message || 'Something went wrong');
               }
             }}
             validationSchema={registerSchema}
