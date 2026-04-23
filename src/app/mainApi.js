@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const baseUrl = 'http://localhost:5000/api';
-export const base = 'http://localhost:5000';
+export const baseUrl = ['http://localhost:5000/api', 'https://hospital-mgmt-system-coa8.onrender.com/api'];
+export const base = ['http://localhost:5000', 'https://hospital-mgmt-system-coa8.onrender.com'];
 
 export const mainApi = createApi({
   reducerPath: 'mainApi',
