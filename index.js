@@ -16,7 +16,7 @@ dotenv.config({ quite: true })
 
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:5173']
+  origin: ['https://hospital-mgmt-system-beryl.vercel.app', 'http://localhost:5173']
 }));
 app.use(cookieParser())
 app.use(express.json());
