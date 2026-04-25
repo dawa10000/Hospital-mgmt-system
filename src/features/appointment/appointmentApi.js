@@ -16,7 +16,12 @@ const appointmentApi = mainApi.injectEndpoints({
       query: ({ page = 1, search = '', department = '' } = {}) => ({
         url: '/appointment/all-appointments',
         method: 'GET',
-        params: { page, limit: 9, search, department },
+        params: {
+          page,
+          limit: 9,
+          ...(search && { search }),
+          ...(department && { department }),
+        },
       }),
       providesTags: ['Appointments']
     }),
@@ -51,10 +56,10 @@ const appointmentApi = mainApi.injectEndpoints({
     }),
 
     getAppointmentStats: builder.query({
-      query: () => ({ 
+      query: () => ({
         url: '/appointment/stats',
-         method: 'GET' 
-        }),
+        method: 'GET'
+      }),
       providesTags: ['Appointments']
     }),
 

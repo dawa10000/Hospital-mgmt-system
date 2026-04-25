@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useGetAllAppointmentsQuery, useUpdateAppointmentStatusMutation } from "./appointmentApi.js";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -32,10 +32,27 @@ function InfoRow({ icon: Icon, label, value }) {
 }
 
 export default function AllAppointments() {
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
-  const [department, setDept] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
+
+  const page = Number(searchParams.get("page") || 1);
+  const search = searchParams.get("search") || "";
+  const department = searchParams.get("department") || "";
+
+  const updateParams = (updates) => {
+    const next = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val && val !== "1") next.set(key, val);
+      else next.delete(key);
+    });
+
+    if (!("page" in updates)) next.delete("page");
+    setSearchParams(next);
+  };
+
+  const clearFilters = () => setSearchParams({});
+
+  const hasFilters = search || department;
 
   const { data, isLoading, isError, error } = useGetAllAppointmentsQuery(
     { page, search, department },
@@ -46,14 +63,6 @@ export default function AllAppointments() {
 
   const appointments = data?.appointments || [];
   const pagination = data?.pagination || {};
-
-  const hasFilters = search || department;
-
-  const clearFilters = () => {
-    setSearch('');
-    setDept('');
-    setPage(1);
-  };
 
   const handleStatusChange = async (id, status) => {
     try {
@@ -69,7 +78,9 @@ export default function AllAppointments() {
       <div className="max-w-7xl mx-auto">
         <div className="h-10 w-64 bg-gray-200 rounded-lg mb-2 animate-pulse" />
         <div className="flex flex-wrap gap-6 mt-10">
-          {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="w-96 h-80 rounded-2xl bg-[#1f2b6c]/20 animate-pulse" />)}
+          {[1, 2, 3, 4, 5, 6].map(i => (
+            <div key={i} className="w-96 h-80 rounded-2xl bg-[#1f2b6c]/20 animate-pulse" />
+          ))}
         </div>
       </div>
     </div>
@@ -95,26 +106,24 @@ export default function AllAppointments() {
           </p>
         </div>
 
-        {/* ✅ Single search bar + date + department */}
+        {/* Filters */}
         <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-4 mb-8 flex flex-col sm:flex-row gap-3">
 
-          {/* Single search */}
+          {/* Search */}
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
               value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              onChange={(e) => updateParams({ search: e.target.value })}
               placeholder="Search by patient name or doctor..."
               className="pl-9 h-11 rounded-xl border-gray-200"
             />
           </div>
 
-
-
-          {/* Department filter */}
+          {/* Department */}
           <Select
-            value={department || 'all'}
-            onValueChange={(val) => { setDept(val === 'all' ? '' : val); setPage(1); }}
+            value={department || "all"}
+            onValueChange={(val) => updateParams({ department: val === "all" ? "" : val })}
           >
             <SelectTrigger className="h-11 rounded-xl border-gray-200 w-full sm:w-48">
               <SelectValue placeholder="All Departments" />
@@ -127,7 +136,7 @@ export default function AllAppointments() {
             </SelectContent>
           </Select>
 
-          {/* Clear filters */}
+          {/* Clear */}
           {hasFilters && (
             <button
               onClick={clearFilters}
@@ -235,7 +244,9 @@ export default function AllAppointments() {
         {/* Pagination */}
         {pagination.totalPages > 1 && (
           <div className="flex items-center justify-center gap-3 mt-12">
-            <button onClick={() => setPage(p => p - 1)} disabled={!pagination.hasPrevPage}
+            <button
+              onClick={() => updateParams({ page: page - 1 })}
+              disabled={!pagination.hasPrevPage}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-gray-200
                          text-[#1f2b6c] text-sm font-semibold shadow-sm hover:bg-gray-50
                          disabled:opacity-40 disabled:cursor-not-allowed transition-all">
@@ -244,17 +255,19 @@ export default function AllAppointments() {
 
             <div className="flex items-center gap-1">
               {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(p => (
-                <button key={p} onClick={() => setPage(p)}
+                <button key={p} onClick={() => updateParams({ page: p })}
                   className={`h-9 w-9 rounded-xl text-sm font-bold transition-all
                     ${p === page
-                      ? 'bg-[#1f2b6c] text-white shadow-lg'
-                      : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'}`}>
+                      ? "bg-[#1f2b6c] text-white shadow-lg"
+                      : "bg-white border border-gray-200 text-gray-500 hover:bg-gray-50"}`}>
                   {p}
                 </button>
               ))}
             </div>
 
-            <button onClick={() => setPage(p => p + 1)} disabled={!pagination.hasNextPage}
+            <button
+              onClick={() => updateParams({ page: page + 1 })}
+              disabled={!pagination.hasNextPage}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-gray-200
                          text-[#1f2b6c] text-sm font-semibold shadow-sm hover:bg-gray-50
                          disabled:opacity-40 disabled:cursor-not-allowed transition-all">
