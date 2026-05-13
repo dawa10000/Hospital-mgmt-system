@@ -28,3 +28,12 @@ export const appointmentSchema = Joi.object({
   doctor: Joi.string().valid("Dr. Aayush Aryal - Orthopedics", "Dr. Anupama Shrestha - Cardiology", "Dr. Binod Karki - Neurology", "Dr. Chandra Prasad Adhikari - Pediatrics", "Dr. Deepa Shrestha - Oncology", "Dr. Esha Shrestha - Dermatology", "Dr. Firoz Khan - Gynecology", "Dr. Gopal Sharma - Urology", "Dr. Hari Prasad Sharma - General").required(),
   message: Joi.string().max(500).allow('').optional()
 })
+
+export const doctorSchema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.string().required(),
+  department: Joi.string().valid("General", "Cardiology", "Neurology", "Orthopedics", "Pediatrics", "Oncology", "Dermatology", "Gynecology", "Urology").required(),
+  qualification: Joi.string().required(),
+  availability: Joi.string().valid("available", "not_available", "on_leave").required(),
+
+})

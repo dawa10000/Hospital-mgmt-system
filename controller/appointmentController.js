@@ -114,21 +114,21 @@ export const getAppointmentStats = async (req, res) => {
   try {
     const [byDepartment, byStatus, total, recent] = await Promise.all([
 
-      // ✅ Count per department
+      //  Count per department
       Appointment.aggregate([
         { $group: { _id: "$department", count: { $sum: 1 } } },
         { $sort: { count: -1 } }
       ]),
 
-      // ✅ Count per status
+      //  Count per status
       Appointment.aggregate([
         { $group: { _id: "$status", count: { $sum: 1 } } }
       ]),
 
-      // ✅ Total appointments
+      // Total appointments
       Appointment.countDocuments(),
 
-      // ✅ Last 7 days trend
+      //  Last 7 days trend
       Appointment.aggregate([
         {
           $match: {

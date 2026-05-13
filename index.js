@@ -1,6 +1,7 @@
 import express from 'express';
 import userRoutes from './routes/userRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js'
+import doctorRoutes from './routes/doctorRoutes.js'
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { setServers } from "node:dns/promises";
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/users', userRoutes);
 app.use('/api/appointment', appointmentRoutes);
+app.use('/api/doctor', doctorRoutes);
 
 
 mongoose.connect(process.env.DB_URL).then((val) => {
