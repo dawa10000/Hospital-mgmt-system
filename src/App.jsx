@@ -13,6 +13,7 @@ import AdminDashboard from "./features/appointment/AdminDashboard.jsx";
 import AddDoctor from "./features/doctor/AddDoctor.jsx";
 import ViewDoctor from "./features/doctor/ViewDoctor.jsx";
 import EditDoctor from "./features/doctor/EditDoctor.jsx";
+import Doctor from "./features/doctor/Doctor.jsx";
 
 
 
@@ -82,6 +83,10 @@ export default function App() {
             {
               path: 'appointment/my-appointments',
               element: <MyAppointments />
+            },
+            {
+              path: 'doctors',
+              element: <Doctor />
             }
           ]
         },

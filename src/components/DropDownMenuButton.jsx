@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router'
 const userlistItems = [
   { icon: UserIcon, property: "Profile" },
   { icon: ListOrdered, property: "My Appointments" },
+  { icon: UserIcon, property: "Doctors" },
   { icon: LogOutIcon, property: "Sign Out" },
 ];
 
@@ -80,6 +81,10 @@ const DropDownMenuButton = ({ user }) => {
 
                   case 'Doctor':
                     nav('/doctor');
+                    break;
+
+                  case 'Doctors':
+                    nav('/doctors');
                     break;
                 }
               }}
