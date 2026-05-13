@@ -25,6 +25,7 @@ const userlistItems = [
 const adminlistItems = [
   { icon: UserIcon, property: "Profile" },
   { icon: LayoutDashboard, property: "Admin Dashboard" },
+  { icon: UserIcon, property: "Doctor" },
   { icon: ListOrdered, property: "All Appointments" },
   { icon: LogOutIcon, property: "Sign Out" },
 ];
@@ -75,6 +76,10 @@ const DropDownMenuButton = ({ user }) => {
 
                   case 'All Appointments':
                     nav('/appointment/all-appointments');
+                    break;
+
+                  case 'Doctor':
+                    nav('/doctor');
                     break;
                 }
               }}

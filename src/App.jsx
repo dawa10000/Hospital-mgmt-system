@@ -10,6 +10,9 @@ import IsLogin from "./components/IsLogin.jsx";
 import RequireAdminAuth from "./components/RequireAdminAuth.jsx";
 import RequireUserAuth from "./components/RequireUserAuth.jsx";
 import AdminDashboard from "./features/appointment/AdminDashboard.jsx";
+import AddDoctor from "./features/doctor/AddDoctor.jsx";
+import ViewDoctor from "./features/doctor/ViewDoctor.jsx";
+import EditDoctor from "./features/doctor/EditDoctor.jsx";
 
 
 
@@ -49,6 +52,18 @@ export default function App() {
             {
               path: 'appointment/stats',
               element: <AdminDashboard />
+            },
+            {
+              path: 'doctor/add-doctor',
+              element: <AddDoctor />
+            },
+            {
+              path: 'doctor/:id',
+              element: <EditDoctor />
+            },
+            {
+              path: 'doctor',
+              element: <ViewDoctor />
             }
           ]
         },
