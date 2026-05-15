@@ -6,6 +6,7 @@ import { base } from '../../app/mainApi.js';
 import { EditIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useGetAllDoctorsQuery } from './doctorApi.js';
+import DeleteDoctor from './DeleteDoctor.jsx';
 
 export default function ViewDoctor() {
   const nav = useNavigate();
@@ -62,6 +63,7 @@ export default function ViewDoctor() {
                     <Button onClick={() => nav(`/doctor/${_id}`)} variant="ghost">
                       <EditIcon />
                     </Button>
+                    <DeleteDoctor id={_id} />
                   </TableCell>
                 </TableRow>
               ))

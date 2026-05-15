@@ -26,12 +26,12 @@ export default function App() {
       element: <RootLayout />,
       children: [
         {
-          index: true,
-          element: <Login />
-        },
-        {
           element: <IsLogin />,
           children: [
+            {
+              index: true,
+              element: <Login />
+            },
             {
               path: "login",
               element: <Login />,
