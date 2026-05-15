@@ -18,13 +18,13 @@ export default function Doctor() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
 
-      {/* Title */}
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Our Doctors</h1>
         <p className="text-gray-500 mt-1">Meet our team of experienced medical professionals</p>
       </div>
 
-      {/* States */}
+
       {isLoading && (
         <div className="flex justify-center items-center h-48 text-gray-400">
           Loading doctors...
@@ -43,13 +43,13 @@ export default function Doctor() {
         </div>
       )}
 
-      {/* Cards Grid */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {doctors.map(({ _id, name, age, department, qualification, availability, image }) => {
           const status = availabilityConfig[availability] || availabilityConfig['not_available'];
           return (
             <Card key={_id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              {/* Doctor Image */}
+
               <div className="relative h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
                 <Avatar className="w-32 h-32 border-4 border-white shadow-md">
                   <AvatarImage
@@ -62,7 +62,7 @@ export default function Doctor() {
                   </AvatarFallback>
                 </Avatar>
 
-                {/* Availability badge */}
+
                 <span className={`absolute top-3 right-3 text-xs font-medium px-2 py-1 rounded-full border ${status.class}`}>
                   {status.label}
                 </span>
