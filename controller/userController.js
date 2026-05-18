@@ -5,23 +5,25 @@ import jwt from "jsonwebtoken";
 
 export const loginUser = async (req, res) => {
 
-  const { email, password } = req.body ?? {};
+  const { email, password } = req.body;
   try {
     const isExist = await User.findOne({ email });
     if (!isExist) return res.status(404).json({ message: "User not found" });
 
-    const isMatch = bcrypt.compareSync(password, isExist.password);
+    const isMatch = await bcrypt.compareSync(password, isExist.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid Credentials" });
 
     const token = jwt.sign({
       id: isExist._id,
       role: isExist.role
-    }, process.env.JWT_SECRET);
+    }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24
-    })
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  maxAge: 24 * 60 * 60 * 1000
+});
 
     return res.status(200).json({
       role: isExist.role,
@@ -38,7 +40,7 @@ export const loginUser = async (req, res) => {
 };
 
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body ?? {};
+  const { username, email, password } = req.body;
   try {
     const isExist = await User.findOne({ email });
     if (isExist) {
@@ -76,7 +78,7 @@ export const getUserProfile = async (req, res) => {
 }
 
 export const updateUserProfile = async (req, res) => {
-  const { email, username } = req.body || {};
+  const { email, username } = req.body;
   try {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: "User not found" });
