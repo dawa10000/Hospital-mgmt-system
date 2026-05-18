@@ -18,10 +18,10 @@ export const loginUser = async (req, res) => {
       role: isExist.role
     }, process.env.JWT_SECRET);
 
-    // res.cookie('token', token, {
-    //   httpOnly: true,
-    //   maxAge: 1000 * 60 * 60 * 24
-    // })
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24
+    })
 
     return res.status(200).json({
       role: isExist.role,
