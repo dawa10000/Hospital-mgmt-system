@@ -84,9 +84,9 @@ export default function AddAppointment() {
   return (
     <div className="min-h-screen bg-[#f4f7ff]">
 
-      {/* ── Hero Header ── */}
+
       <div className="bg-[#1f2b6c] relative overflow-hidden">
-        {/* Background decoration */}
+
         <div className="absolute inset-0 opacity-10"
           style={{ backgroundImage: 'radial-gradient(circle at 80% 50%, #bfd2f8 0%, transparent 60%)' }} />
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/3" />
@@ -114,10 +114,10 @@ export default function AddAppointment() {
         </div>
       </div>
 
-      {/* ── Body ── */}
+
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
 
-        {/* ── Form ── */}
+
         <Formik
           initialValues={{
             name: '', gender: '', age: '', email: '', phone: '',
@@ -142,7 +142,7 @@ export default function AddAppointment() {
           {({ handleChange, handleSubmit, values, touched, errors, setFieldValue }) => (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
-              {/* Section 1: Personal */}
+
               <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="h-8 w-8 rounded-lg bg-[#1f2b6c] flex items-center justify-center">
@@ -194,7 +194,7 @@ export default function AddAppointment() {
                 </div>
               </section>
 
-              {/* Section 2: Appointment */}
+
               <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="h-8 w-8 rounded-lg bg-[#1f2b6c] flex items-center justify-center">
@@ -264,7 +264,7 @@ export default function AddAppointment() {
                 </div>
               </section>
 
-              {/* Section 3: Extra */}
+
               <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="h-8 w-8 rounded-lg bg-[#1f2b6c] flex items-center justify-center">
@@ -314,7 +314,6 @@ export default function AddAppointment() {
                 </div>
               </section>
 
-              {/* Submit */}
               <Button disabled={isLoading} type="submit"
                 className="w-full h-14 bg-[#1f2b6c] hover:bg-[#2d3f9e] text-white font-bold text-base
                            rounded-2xl shadow-xl shadow-[#1f2b6c]/30 transition-all duration-200 mb-2">
@@ -330,10 +329,10 @@ export default function AddAppointment() {
           )}
         </Formik>
 
-        {/* ── Sidebar ── */}
+
         <aside className="flex flex-col gap-5 lg:sticky lg:top-6 self-start">
 
-          {/* Schedule */}
+
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="bg-[#1f2b6c] px-5 py-4 flex items-center gap-3">
               <Clock className="h-4 w-4 text-[#bfd2f8]" />
@@ -365,7 +364,7 @@ export default function AddAppointment() {
             </div>
           </div>
 
-          {/* Emergency */}
+
           <div className="bg-red-50 border border-red-100 rounded-2xl p-5 flex items-center gap-4">
             <div className="h-11 w-11 rounded-xl bg-red-100 flex items-center justify-center shrink-0">
               <PhoneCall className="h-5 w-5 text-red-500" />
