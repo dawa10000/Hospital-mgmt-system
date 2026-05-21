@@ -67,7 +67,7 @@ export const updateAppointmentStatus = async (req, res) => {
     const appointment = await Appointment.findByIdAndUpdate(
       req.params.id,
       { status },
-      { returnDocument: 'after' }
+      { new: true }
     );
 
     if (!appointment)
@@ -114,21 +114,20 @@ export const getAppointmentStats = async (req, res) => {
   try {
     const [byDepartment, byStatus, total, recent] = await Promise.all([
 
-      //  Count per department
+
       Appointment.aggregate([
         { $group: { _id: "$department", count: { $sum: 1 } } },
         { $sort: { count: -1 } }
       ]),
 
-      //  Count per status
       Appointment.aggregate([
         { $group: { _id: "$status", count: { $sum: 1 } } }
       ]),
 
-      // Total appointments
+
       Appointment.countDocuments(),
 
-      //  Last 7 days trend
+
       Appointment.aggregate([
         {
           $match: {
